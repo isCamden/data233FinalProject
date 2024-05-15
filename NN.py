@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import tkinter as tk
 from tkinter import ttk, messagebox
+from ttkthemes import ThemedStyle
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 from tensorflow.keras.models import Sequential
@@ -18,27 +19,42 @@ class RestaurantRecommendationApp:
         self.process_data()
         self.selected_restaurants = []
 
+        style = ThemedStyle(self.root)
+        style.set_theme("arc")
+
+        style.configure('TLabel', font=('Intel One Mono', 12))
+        style.configure('TButton', font=('Intel One Mono', 12))
+        style.configure('TCheckbutton', font=('Intel One Mono', 12))
+        style.configure('TCombobox', font=('Intel One Mono', 12))
+        style.configure('TListbox', font=('Intel One Mono', 10))
+        style.configure('TText', font=('Intel One Mono', 10))
+        style.configure('Green.TButton', foreground='#006E3B', background='#006E3B')
+        style.configure('Red.TButton', foreground='#BE202E', background='#BE202E')
+
         # search bar
+        ttk.Label(self.root, text="Search:").pack(pady=10)
         self.search_var = tk.StringVar()
         self.search_var.trace("w", self.update_list)
         self.search_entry = ttk.Entry(self.root, textvariable=self.search_var, width=20)
         self.search_entry.pack(pady=10)
 
         # show restaurants list
-        self.listbox = tk.Listbox(self.root, width=60, height=20, selectmode=tk.MULTIPLE)
+        ttk.Label(self.root, text="Select Restaurants:").pack(pady=10)
+        self.listbox = tk.Listbox(self.root, width=60, height=15, selectmode=tk.MULTIPLE, font=('Intel One Mono', 12))
         self.listbox.pack(pady=10)
         self.update_list()
 
-        # clear selection
-        self.clear_selection_button = ttk.Button(self.root, text="Clear Selection", command=self.clear_selection)
-        self.clear_selection_button.pack(pady=5)
-
-        # get recommendations
-        self.get_recommendations_button = ttk.Button(self.root, text="Get Recommendations", command=self.get_recommendations)
-        self.get_recommendations_button.pack(pady=5)
+        # clear selection and get recommendations buttons
+        frame = ttk.Frame(self.root)
+        frame.pack(pady=10)
+        self.clear_selection_button = ttk.Button(frame, text="Clear Selection", command=self.clear_selection, style='Red.TButton')
+        self.clear_selection_button.grid(row=0, column=0, padx=5)
+        self.get_recommendations_button = ttk.Button(frame, text="Get Recommendations", command=self.get_recommendations, style='Green.TButton')
+        self.get_recommendations_button.grid(row=0, column=1, padx=5)
 
         # show recommendations
-        self.recommendations_text = tk.Text(self.root, width=60, height=11)
+        ttk.Label(self.root, text="Recommended Restaurants:").pack(pady=10)
+        self.recommendations_text = tk.Text(self.root, width=60, height=11, font=('Intel One Mono', 12))
         self.recommendations_text.pack(pady=10)
 
     def process_data(self):
@@ -133,7 +149,7 @@ def main():
 
     # tkinter window
     root = tk.Tk()
-    root.geometry("550x700")
+    root.geometry("700x900")
     app = RestaurantRecommendationApp(root, df)
     root.mainloop()
 
