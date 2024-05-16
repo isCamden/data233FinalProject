@@ -1,5 +1,7 @@
 # Restaurant Recommendation System
 
+A collection of several different python files created with the goal of creating a neural network to make accurate restaurant recommendations.
+
 ## Data
 
 Download the data from [this link](https://drive.google.com/drive/folders/11oR-sdLRGJLyARXsVQL0R0bi8adG3HtX?usp=sharing) and place it into the `data` folder.
