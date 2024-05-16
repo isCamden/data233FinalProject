@@ -41,7 +41,6 @@ class RestaurantFilterApp:
         self.create_widgets()
 
     def create_widgets(self):
-        # Themed Style
         style = ThemedStyle(self.root)
         style.set_theme("arc")
 
